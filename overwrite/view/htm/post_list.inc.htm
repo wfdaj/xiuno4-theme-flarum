@@ -1,0 +1,69 @@
+<?php
+	empty($allowupdate) AND $allowupdate = 0;
+	empty($allowdelete) AND $allowdelete = 0;
+	empty($allowpost) AND $allowpost = 0;
+?>
+<?php if($postlist) { foreach($postlist as $_post) { ?>
+<div class="PostStream-item" pid="<?php echo $_post['pid'];?>">
+	<article class="Post CommentPost">
+		<header class="Post-header">
+			<ul>
+				<li class="item-user">
+					<div class="PostUser">
+						<h3>
+							<a href="<?php echo url("user-$_post[uid]");?>">
+								<img class="Avatar PostUser-avatar lazy"  data-original="<?php echo $_post['user_avatar_url'];?>">
+								<span class="username">
+									<?php echo $_post['username'];?>
+								</span>
+							</a>
+						</h3>
+					</div>
+				</li>
+				<li class="PostMeta">
+					<?php echo $_post['create_date_fmt'];?>
+				</li>
+			</ul>
+		</header>
+		<div class="Post-body message">
+			<?php if(!empty($_post['subject'])) { ?>
+			<a href="<?php echo url("thread-$_post[tid]");?>"><?php echo $_post['subject'];?></a>
+			<?php } ?>
+			<!--{hook post_list_inc_message_before.htm}-->
+			<?php echo $_post['message_fmt'];?>
+			<!--{hook post_list_inc_message_after.htm}-->
+			<?php echo post_file_list_html($_post['filelist']);?>
+			<!--{hook post_list_inc_filelist_after.htm}-->
+		</div>
+		<aside class="Post-actions">
+			<ul>
+				<?php if($allowpost) { ?>
+				<li>
+					<a class="Button Button--link post_reply" href="javascript:void(0)" tid="<?php echo $_post['tid'];?>" pid="<?php echo $_post['pid'];?>">
+						<i class="fa fa-fw fa-quote-left"></i>引用
+					</a>
+				</li>
+				<?php } ?>
+
+				<?php if($allowupdate || $_post['allowupdate']) { ?>
+				<li>
+					<a class="Button Button--link post_update" href="<?php echo url("post-update-$_post[pid]");?>"><i class="fa fa-fw fa-pencil"></i><?php echo lang('edit');?></a>
+				</li>
+				<?php } ?>
+			
+				<?php if($allowdelete || $_post['allowdelete']) { ?>
+				<li>
+					<a class="Button Button--link post_delete _confirm" data-href="<?php echo url("post-delete-$_post[pid]");?>" data-confirm-text="<?php echo lang('confirm_delete');?>" href="javascript:;"><i class="fa fa-fw fa-remove"></i><?php echo lang('delete');?></a>
+				</li>
+				<?php } ?>
+				
+				<?php if($_post['floor']) { ?>
+				<li>
+					<span class="Button Button--link floor"><?php echo $_post['floor'];?></span>
+				</li>
+				<?php } ?>
+			</ul>
+		</aside>
+	</article>
+</div>
+<?php }} ?>

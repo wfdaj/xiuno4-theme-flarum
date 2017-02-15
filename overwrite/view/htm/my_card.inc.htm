@@ -1,0 +1,65 @@
+<div class="UserCard Hero UserHero">
+	<div class="container">
+		<div class="UserCard-profile">
+			<h2 class="UserCard-identity">
+				<a href="<?php echo url("user-$_uid");?>">
+					<div class="UserCard-avatar">
+						<img class="Avatar" src="<?php echo $user['avatar_url'];?>">
+					</div>
+					<span class="username">
+						<?php echo $user['username'];?>
+					</span>
+				</a>
+			</h2>
+			<!--{hook my_index_groupname_before.htm}-->
+			<ul class="UserCard-badges badges">
+				<?php if($user['gid'] == 1) { ?>
+				<li class="item-group1">
+					<span class="Badge Badge--group--1" title="<?php echo lang('group_1');?>">
+						<i class="icon fa fa-fw fa-wrench Badge-icon"></i>
+					</span>
+				</li>
+				<?php } ?>
+				<?php if($user['gid'] == 2) { ?>
+				<li class="item-group2">
+					<span class="Badge Badge--group--2" title="<?php echo lang('group_2');?>">
+						<i class="icon fa fa-fw fa-secret Badge-icon"></i>
+					</span>
+				</li>
+				<?php } ?>
+				<?php if($user['gid'] >= 4 && $_user['gid'] <= 5) { ?>
+				<li class="item-group4">
+					<span class="Badge Badge--group--4" title="版主">
+						<i class="icon fa fa-fw fa-user-md Badge-icon"></i>
+					</span>
+				</li>
+				<?php } ?>
+				<?php if($user['gid'] >= 101 && $_user['gid'] <= 105) { ?>
+				<li class="item-group100">
+					<span class="Badge Badge--group--100" title="注册会员">
+						<i class="icon fa fa-fw fa-user Badge-icon"></i>
+					</span>
+				</li>
+				<?php } ?>
+			</ul>
+			<ul class="UserCard-info">
+				<li class="item-bio">
+					<div class="UserBio editable">
+						<div class="UserBio-content">
+							<p class="UserBio-placeholder">写点什么介绍下自己吧</p>
+						</div>
+					</div>
+				</li>
+				<li class="item-lastSeen">
+					<span class="UserCard-lastSeen" title="<?php echo lang('last_login_date');?>">
+						<i class="icon fa fa-fw fa-clock-o "></i>
+						<?php echo $user['login_date_fmt'];?>
+					</span>
+				</li>
+				<li class="item-joined" title="<?php echo lang('create_date');?>">
+					<?php echo $user['create_date_fmt'];?>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

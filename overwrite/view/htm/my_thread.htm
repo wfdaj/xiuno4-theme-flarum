@@ -1,0 +1,74 @@
+<?php include _include(APP_PATH.'view/htm/header_thread.inc.htm');?>
+
+<div class="UserPage">
+    <?php include _include(APP_PATH.'view/htm/my_card.inc.htm');?>
+    <div class="container">
+        <!--边栏开始-->
+        <div class="sideNav UserPage-nav">
+            <ul>
+                <li class="item-nav">
+                    <div class="ButtonGroup Dropdown dropdown App-titleControl Dropdown--select">
+                        <button class="Dropdown-toggle Button" data-toggle="dropdown">
+                            <span class="Button-label"><?php echo lang('my_join_thread');?></span>
+                            <i class="icon fa fa-fw fa-sort Button-caret"></i>
+                        </button>
+                        <ul class="Dropdown-menu dropdown-menu">
+                            <!--{hook my_index_profile_before.htm}-->
+                            <li>
+                                <a href="<?php echo url('my'); ?>" class="hasIcon ">
+                                    <i class="icon fa fa-fw fa-user Button-icon"></i>
+                                    <span class="Button-label">
+                                        个人资料
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_profile_after.htm}-->
+                            <li class="active">
+                                <a href="<?php echo url('my-thread'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-bars Button-icon"></i>
+                                    <span class="Button-label">
+                                        帖子
+                                        <span class="Button-badge"><?php echo $user['threads'];?></span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_thread_after.htm}-->
+                            <li>
+                                <a href="<?php echo url('my-password'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-key Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('modify_password'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_password_after.htm}-->
+                            <li>
+                                <a href="<?php echo url('my-avatar'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-smile-o Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('modify_avatar'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_avatar_after.htm}-->
+                            <li class="Dropdown-separator"></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--内容栏开始-->
+        <div class="sideNavOffset UserPage-content">
+            <div class="SettingsPage">
+                <div class="DiscussionList">
+                    <ul class="DiscussionList-discussions">
+                        <?php include _include(APP_PATH.'view/htm/thread_list.inc.htm');?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>

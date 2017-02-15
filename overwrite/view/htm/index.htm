@@ -1,0 +1,149 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<!--{hook index_start.htm}-->
+
+<div class="IndexPage">
+    <div class="Alert Alert--undefined">
+        <div class="container">
+            <span class="Alert-body">本站程序使用 <strong><a href="http://bbs.xiuno.com/" target="_blank">xiuno 4</a></strong> ，模板为仿 <strong><a href="http://flarum.org/" target="_blank">Flarum.org</a></strong> 样式。本站小众程序群：<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=e342ab03917e8fa9e110137e7f5f6ed3e111af27b82399b357e520daa579d6bf"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" style="vertical-align:middle;" alt="一键加入小众程序群" title="一键加入小众程序群"></a></span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="IndexPage-nav sideNav">
+            <ul>
+                <li class="item-newDiscussion App-primaryControl">
+                    <a role="button" class="Button Button--primary IndexPage-newDiscussion hasIcon" href="<?php echo url('thread-create-'.$fid);?>" title="<?php echo lang('thread_create_new');?>">
+                        <i class="icon fa fa-fw fa-edit Button-icon">
+                        </i>
+                        <span class="Button-label">
+                            <?php echo lang('thread_create_new');?>
+                        </span>
+                    </a>
+                </li>
+                <!--{hook index_site_brief_start.htm}-->
+                <li class="item-nav">
+                    <div class="ButtonGroup Dropdown dropdown App-titleControl Dropdown--select">
+                        <button class="Dropdown-toggle Button" data-toggle="dropdown">
+                            <span class="Button-label">
+                                <?php echo lang('index_page');?>
+                            </span>
+                            <i class="icon fa fa-fw fa-sort Button-caret">
+                            </i>
+                        </button>
+                        <ul class="Dropdown-menu dropdown-menu">
+                            <li class="item-allDiscussions active">
+                                <a href="." class=" hasIcon" title="<?php echo lang('index_page');?>">
+                                    <i class="icon fa fa-fw fa-comments-o Button-icon">
+                                    </i>
+                                    <span class="Button-label">
+                                        <?php echo lang('index_page');?>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="item-tags">
+                                <a href="###" class="hasIcon" title="Tags">
+                                    <i class="icon fa fa-fw fa-th-large Button-icon">
+                                    </i>
+                                    <span class="Button-label">
+                                        Tags
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="Dropdown-separator">
+                            </li>
+
+                            <!-- 版块 -->
+                            <?php foreach($forumlist_show as $_forum) { ?>
+
+                            <!--{hook header_nav_forumlist_loop_start.htm}-->
+                            <li fid="<?php echo $_forum['fid'];?>">
+                                <a class="TagLinkButton hasIcon nav-<?php echo $_forum['fid'];?>" href="<?php echo url("forum-$_forum[fid]");?>">
+                                    <span class="icon TagIcon Button-icon">
+                                    </span>
+                                    <?php echo $_forum['name'];?>
+                                </a>
+                            </li>
+                            <!--{hook header_nav_forumlist_loop_end.htm}-->
+                            <?php } ?>
+                            <!--{hook header_nav_pc_end.htm}-->
+                        </ul>
+                    </div>
+                </li>
+                <li class="Dropdown-separator"></li>
+                <li class="item-links hidden-sm-down">
+                    <a class="text-muted hasIcon" href="http://jpdm.net/bbs/thread-11.htm" title="申请友情链接">
+                        <i class="icon fa fa-fw fa-link Button-icon">
+                        </i>
+                        <span class="Button-label">
+                            喜欢 xiuno 的朋友
+                        </span>
+                    </a>
+                </li>
+                <li class="item-links hidden-sm-down">
+                    <a class="text-muted" target="_blank" href="http://www.gingerbbs.com/">gingerbbs</a>
+                    <a class="text-muted" target="_blank" href="http://www.baiup.com/">百尚网</a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="IndexPage-results">
+            <div class="sideNavOffset">
+                <div class="IndexPage-toolbar">
+                    <div class="IndexPage-toolbar-view Dropdown dropdown">
+                        <button class="Dropdown-toggle Button" data-toggle="dropdown">
+                            <?php echo lang('new_thread');?>
+                            <i class="icon fa fa-fw fa-sort">
+                            </i>
+                        </button>
+                        <ul class="Dropdown-menu dropdown-menu">
+                            <li>
+                                <a href="./">
+                                    <?php echo lang('new_thread');?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo url("index-0-1");?>">
+                                    <?php echo lang('digest_thread');?>
+                                </a>
+                            </li>
+                        </ul>
+                        <?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
+                    </div>
+                    <ul class="IndexPage-toolbar-action">
+                        <li class="item-refresh">
+                            <button class="win-refresh Button Button--icon hasIcon" type="button">
+                                <i class="icon fa fa-fw fa-refresh Button-icon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <!--{hook index_main_start.htm}-->
+
+                <div class="DiscussionList">
+                    <!-- <button class="Button Button--block DiscussionList-update disabled" type="button" title="有新回复的主题，点击查看">
+                        <span class="Button-label">
+                            <i class="fa fa-fw fa-refresh"></i>
+                            有新回复的主题，点击查看（本功能整理中，暂不可用）
+                        </span>
+                    </button> -->
+                    <ul class="DiscussionList-discussions">
+                        <!--{hook index_threadlist_before.htm}-->
+                        <?php include _include(APP_PATH.'view/htm/thread_list.inc.htm');?>
+                        <!--{hook index_threadlist_after.htm}-->
+                    </ul>
+                    <!--{hook index_page_before.htm}-->
+                    <div class="DiscussionList-loadMore">
+                        <nav class="text-center">
+                            <ul class="pagination"><?php echo $pagination; ?></ul>
+                        </nav>
+                    </div>
+                    <!--{hook index_page_end.htm}-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--{hook index_end.htm}-->
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+<!--{hook index_js.htm}-->

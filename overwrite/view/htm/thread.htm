@@ -1,0 +1,407 @@
+<?php include _include(APP_PATH.'view/htm/header_thread.inc.htm');?>
+<div class="DiscussionPage-list">
+	<div class="DiscussionList">
+		<ul class="DiscussionList-discussions">
+			<?php
+				$_threadlist = mythread_find_by_uid($thread['uid'], 1, 10);	
+				// 过滤没有权限访问的主题
+				thread_list_access_filter($_threadlist, $gid);
+			?>
+			<?php foreach($_threadlist as $_thread) { ?>
+			<li>
+				<div class="DiscussionListItem">
+					<div class="DiscussionListItem-content Slidable-content subject">
+						<a href="<?php echo url("user-$_thread[uid]");?>" class="DiscussionListItem-author">
+							<img class="Avatar lazy" data-original="<?php echo $_thread['user_avatar_url'];?>">
+						</a>
+						<a href="<?php echo url("thread-$_thread[tid]");?>" class="DiscussionListItem-main">
+							<h3 class="DiscussionListItem-title">
+								<?php echo $_thread['subject'];?>
+							</h3>
+							<ul class="DiscussionListItem-info">
+								<li class="item-tags">
+									<span class="TagsLabel nav-<?php echo $_thread['fid']; ?>">
+										<span class="TagLabel colored">
+											<span class="TagLabel-text">
+												<?php echo $_thread['forumname'];?>
+											</span>
+										</span>
+									</span>
+								</li>
+								<li class="item-terminalPost">
+									<span>
+										<?php if($_thread['posts'] == 0) { ?>
+										<span class="username">
+											<?php echo $_thread['username'];?>
+										</span>
+										<span class="time">
+											<?php echo $_thread['create_date_fmt'];?>
+										</span>
+										<?php } else { ?>
+										<i class="icon fa fa-fw fa-reply ">
+										</i>
+										<span class="username">
+											<?php echo $_thread['lastusername'];?>
+										</span>
+										<span class="time">
+											<?php echo $_thread['last_date_fmt']; ?>
+										</span>
+										<?php } ?>
+									</span>
+								</li>
+							</ul>
+						</a>
+						<span class="DiscussionListItem-count" title="回帖数">
+							<?php echo $_thread['posts'];?>
+						</span>
+					</div>
+				</div>
+			</li>
+			<?php } ?>
+		</ul>
+	</div>
+</div>
+<header class="Hero DiscussionHero DiscussionHero--colored text-white hero-<?php echo $forum['fid'];?>">
+	<div class="container">
+		<ul class="DiscussionHero-items">
+			<?php if($thread['top'] > 0) { ?>
+			<li class="item-badges">
+				<ul class="DiscussionHero-badges badges">
+					<li class="item-sticky">
+						<span class="Badge Badge--sticky " title="<?php echo lang('top');?>">
+							<i class="icon fa fa-fw fa-thumb-tack Badge-icon">
+							</i>
+						</span>
+					</li>
+				</ul>
+			</li>
+			<?php } ?>
+			<?php if($thread['closed'] > 0) { ?>
+			<li class="item-badges">
+				<ul class="DiscussionHero-badges badges">
+					<li class="item-locked">
+						<span class="Badge Badge--locked " title="<?php echo lang('thread_has_already_closed');?>">
+							<i class="icon fa fa-fw fa-lock Badge-icon">
+							</i>
+						</span>
+					</li>
+				</ul>
+			</li>
+			<?php } ?>
+			<li class="item-tags">
+				<span class="TagsLabel">
+					<a class="TagLabel colored nav-<?php echo $forum['fid'];?>" title="<?php echo $forum['name']; ?>" href="forum-<?php echo $forum['fid']; ?>.htm">
+						<?php echo $forum['name']; ?>
+					</a>
+				</span>
+			</li>
+			<li class="item-title">
+				<!--{hook thread_subject_before.htm}-->
+				<h2 class="DiscussionHero-title">
+					<!--{hook thread_subject_start.htm}-->
+					<?php echo $thread['subject'];?>
+					<!--{hook thread_subject_end.htm}-->
+				</h2>
+				<!--{hook thread_subject_after.htm}-->
+			</li>
+		</ul>
+	</div>
+</header>
+<div class="container">
+	<div class="DiscussionPage-nav">
+		<ul>
+			<li class="item-controls">
+				<div class="ButtonGroup Dropdown dropdown App-primaryControl Dropdown--split itemCount1">
+					<a class="SplitDropdown-button Button Button--primary hasIcon" href="#quick_reply_form" type="button" title="<?php echo lang('reply');?>">
+						<i class="icon fa fa-fw fa-reply Button-icon">
+						</i>
+						<span class="Button-label">
+							<?php echo lang('reply');?>
+						</span>
+					</a>
+					<button class="Dropdown-toggle Button Button--icon Button--primary" data-toggle="dropdown">
+						<i class="icon fa fa-fw fa-ellipsis-h Button-icon">
+						</i>
+						<i class="icon fa fa-fw fa-caret-down Button-caret">
+						</i>
+					</button>
+					<ul class="Dropdown-menu dropdown-menu Dropdown-menu--top Dropdown-menu--right">
+						<li class="item-reply">
+							<a class="hasIcon" href="#quick_reply_form" type="button" title="<?php echo lang('reply');?>">
+								<i class="icon fa fa-fw fa-reply Button-icon">
+								</i>
+								<span class="Button-label">
+									<?php echo lang('reply');?>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<!--{hook thread_postlist_before.htm}-->
+			<!-- 手机模式分页 -->
+			<li class="item-scrubber">
+				<div class="PostStreamScrubber Dropdown dropdown App-titleControl">
+					<!-- 原版手机版顶部显示的分页 -->
+					<button class="Button Dropdown-toggle" data-toggle="dropdown">
+						<?php echo $header['mobile_title'];?>
+						<i class="icon fa fa-fw fa-sort "></i>
+					</button>
+					<!-- <button class="Button Dropdown-toggle" data-toggle="dropdown">第<span class="Scrubber-index">1</span>楼 / 共<span class="Scrubber-count">2</span>楼 <i class="icon fa fa-fw fa-sort "></i></button> -->
+					<div class="Dropdown-menu dropdown-menu">
+						<div class="Scrubber">
+							<a class="Scrubber-first win-backtop">
+								<i class="icon fa fa-fw fa-angle-double-up"></i> 原帖
+							</a>
+							<div class="Scrubber-scrollbar" style="max-height: 166px; cursor: pointer; -webkit-user-select: none;">
+								<div class="Scrubber-before" style="height: 0%;"></div>
+								<div class="Scrubber-handle" style="cursor: move; height: 35%;">
+									<div class="Scrubber-bar"></div>
+									<div class="Scrubber-info">
+										<strong>第<span class="Scrubber-index">1</span>楼 / 共<span class="Scrubber-count">2</span>楼</strong>
+									</div>
+								</div>
+								<div class="Scrubber-after" style="height: 65%;"></div>
+								<div class="Scrubber-unread" style="top: 0%; height: 100%;">0 条未读</div>
+							</div>
+							<a class="Scrubber-last win-backbottom"><i class="icon fa fa-fw fa-angle-double-down "></i> 现在</a>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="DiscussionPage-stream">
+		<div class="PostStream postlist">
+			<!--楼主内容-->
+			<div class="PostStream-item">
+				<article class="Post CommentPost">
+					<header class="Post-header">
+						<ul>
+							<li class="item-user">
+								<div class="PostUser">
+									<h3>
+										<a href="<?php echo url("user-$thread[uid]");?>">
+											<img class="Avatar PostUser-avatar lazy" data-original="<?php echo $thread['user_avatar_url'];?>">
+											<span class="username">
+												<?php echo $thread['username'];?>
+											</span>
+										</a>
+									</h3>
+									<!-- <ul class="PostUser-badges badges">
+										<li class="item-group1">
+											<span class="Badge Badge--group--1" title="<?php echo lang('group_1');?>">
+												<i class="icon fa fa-fw fa-user Badge-icon">
+												</i>
+											</span>
+										</li>
+									</ul> -->
+								</div>
+							</li>
+							<li class="PostMeta"><?php echo $thread['create_date_fmt'];?></li>
+						</ul>
+					</header>
+					
+					<?php if($page == 1) { ?>
+					<div class="Post-body message thread_post" isfirst="1">
+						<!--{hook thread_message_before.htm}-->
+						<?php echo $first['message_fmt'];?>
+						<!--{hook thread_message_after.htm}-->
+						
+						<?php echo post_file_list_html($first['filelist']);?>
+						<!--{hook thread_filelist_after.htm}-->
+
+					<?php } else { ?>
+
+						<!--{hook thread_message_more_before.htm}-->
+						<p><a href="<?php echo url("thread-$tid");?>"><?php echo lang('view_thread_message');?></a></p>
+						<!--{hook thread_message_more_after.htm}-->
+					<?php } ?>
+					</div>
+					<aside class="Post-actions">
+						<ul>
+							<!--{hook thread_post_list_title_right.htm}-->
+							<li>
+								<?php if($allowupdate || $first['allowupdate']) { ?>
+								<a class="Button Button--icon Button--flat nocache" href="<?php echo url("post-update-$thread[firstpid]");?>" title="<?php echo lang('edit');?>">
+									<i class="fa fa-fw fa-pencil Button-icon icon-edit"></i>
+								</a>
+								<?php } ?>
+							</li>
+							<li>
+								<?php if($allowdelete || $first['allowdelete']) { ?>
+								<a class="Button Button--icon Button--flat post_delete" data-href="<?php echo url("post-delete-$thread[firstpid]");?>" href="javascript:void(0);" title="<?php echo lang('delete');?>" isfirst="1">
+									<i class="fa fa-fw fa-remove Button-icon icon-remove"></i>
+								</a>
+								<?php } ?>
+							</li>
+						</ul>
+					</aside>
+				</article>
+			</div>
+
+			<!--回复列表-->
+			<?php include _include(APP_PATH.'view/htm/post_list.inc.htm'); ?>
+
+			<?php if($pagination) { ?>
+			<nav class="text-center">
+				<ul class="pagination" id="pagination"><?php echo $pagination; ?></ul>
+			</nav>
+			<?php }?>
+
+			<?php if(!empty($user)) { ?>
+			<form action="<?php echo url("post-create-$tid-1");?>" method="post" id="quick_reply_form">
+				<input type="hidden" name="doctype" value="1">
+				<input type="hidden" name="return_html" value="1">
+				<input type="hidden" name="quotepid" value="0">
+				<div class="PostStream-item">
+					<article class="Post CommentPost">
+						<header class="Post-header">
+							<ul>
+								<li class="pull-right">
+									<span class="floor"><?php echo ($thread['posts'] + 1);?></span>
+									<?php echo lang('floor');?>
+								</li>
+								<li class="item-user">
+									<div class="PostUser">
+										<h3>
+											<a href="<?php echo url("user-$thread[uid]");?>">
+												<img class="Avatar PostUser-avatar lazy" data-original="<?php echo $user['avatar_url'];?>">
+											</a>
+										</h3>
+									</div>
+								</li>
+								<li class="PostMeta f15">
+									<i class="icon fa fa-fw fa-reply "></i>
+									<a href="<?php echo url("thread-$tid");?>"><?php echo $thread['subject'];?></a>
+								</li>
+							</ul>
+						</header>
+						<div class="message">
+							<textarea class="FormControl TextEditor-flexible" placeholder="<?php echo lang('message');?>" name="message" id="message"></textarea>
+							<!--{hook thread_quick_reply_left_start.htm}-->
+							<button class="Button Button--primary mt15" type="submit" id="submit" data-loading-text="<?php echo lang('submiting');?>...">
+								<span class="Button-label">
+									<?php echo lang('post_create');?>
+								</span>
+							</button>
+							<!--{hook thread_quick_reply_left_end.htm}-->
+
+							<!--{hook thread_quick_reply_right_start.htm}-->
+							<a href="<?php echo url("post-create-$tid");?>" class="Button Button--icon hasIcon mt15 ml15" title="完整版编辑器">
+								<i class="icon fa fa-fw fa-pencil Button-icon"></i>
+							</a>
+							<!--{hook thread_quick_reply_right_end.htm}-->
+						</div>
+					</article>
+				</div>
+			</form>
+			<?php } ?>
+			<!--{hook thread_postlist_after.htm}-->
+
+			<div class="DiscussionList-loadMore">
+				<button class="Button win-back" type="button" title="Load More">
+					<span class="Button-label">
+						<?php echo lang('back');?>
+					</span>
+				</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!--{hook thread_end.htm}-->
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var jform = $('#quick_reply_form');
+var jsubmit = $('#submit');
+jform.on('submit', function() {
+	jform.reset();
+	jsubmit.button('loading');
+	var postdata = jform.serialize();
+	$.xpost(jform.attr('action'), postdata, function(code, message) {
+		if(code == 0) {
+			var s = '<div class="PostStream">'+message+'</div>';
+			var jtr = $(s).find('.PostStream-item');
+			jtr.insertBefore($('.PostStream-item').last());
+			jsubmit.button('reset');
+			$('#message').val('');
+			
+			// 楼层 +1
+			var jfloor = jform.find('.floor');
+			jfloor.html(xn.intval(jfloor.html()) + 1);
+			
+			// 回复数 +1
+			var jposts = $('.posts');
+			jposts.html(xn.intval(jposts.html()) + 1);
+			
+		} else if(code < 0) {
+			$.alert(message);
+			jsubmit.button('reset');
+		} else {
+			jform.find('[name="'+code+'"]').alert(message).focus();
+			jsubmit.button('reset');
+		}
+	});
+	return false;
+});
+
+// 缩放图片，适应屏幕大小。
+function resize_image() {
+	var jmessagelist = $('div.message');
+	var first_width = jmessagelist.width(); // 815 : 746; //  734 746
+	jmessagelist.each(function() {
+		var jdiv = $(this);
+		var maxwidth = jdiv.attr('isfirst') ? first_width : first_width - 79; //  734 746
+		var jmessage_width = Math.min(jdiv.width(), maxwidth);
+		jdiv.find('img, embed, iframe').each(function() {
+			var jimg = $(this);
+			//if(jimg.width() < 500) return;
+			var img_width = this.org_width;
+			var img_height = this.org_height;
+			if(!img_width) {
+				var img_width = jimg.width();
+				var img_height = jimg.height();
+				this.org_width = img_width;
+				this.org_height = img_height;
+			}
+			//var percent = xn.min(100, xn.ceil((img_width / jmessage_width) * 100));
+			if(img_width > jmessage_width) {
+				if(this.tagName == 'IMG') {
+					jimg.width(jmessage_width);
+					jimg.css('height', 'auto');
+				} else {
+					jimg.width(jmessage_width);
+					var height = (img_height / img_width) * jimg.width();
+					jimg.height(height);
+				}
+			}
+			
+		});
+	});
+}
+$(function() {
+	resize_image();
+	$(window).on('resize', resize_image);
+});
+
+// 输入框自动伸缩
+var jmessage = $('#message');
+jmessage.on('focus', function() {if(jmessage.t) { clearTimeout(jmessage.t); jmessage.t = null; } jmessage.css('height', '8rem'); });
+jmessage.on('blur', function() {jmessage.t = setTimeout(function() { jmessage.css('height', '2.5rem');}, 1000); });
+
+$('#nav_pc li[fid="<?php echo $fid;?>"]').tab('show');
+$('#nav_mobile li[fid="<?php echo $fid;?>"]').tab('show');
+
+</script>
+
+<?php if($thread['closed'] && ($gid == 0 || $gid > 5)) { ?>
+<script>
+jmessage.val('<?php echo lang('thread_has_already_closed');?>').attr('readonly', 'readonly');
+</script>
+<?php } ?>
+
+<!--{hook thread_js.htm}-->

@@ -1,0 +1,141 @@
+<?php include _include(APP_PATH.'view/htm/header_thread.inc.htm');?>
+
+<div class="UserPage">
+	<div class="UserCard Hero UserHero">
+		<div class="container">
+			<div class="UserCard-profile">
+				<h2 class="UserCard-identity">
+					<a href="<?php echo url("user-$_uid");?>">
+						<div class="UserCard-avatar">
+							<img class="Avatar" src="<?php echo $_user['avatar_url'];?>">
+						</div>
+						<span class="username">
+							<?php echo $_user['username'];?>
+						</span>
+					</a>
+				</h2>
+				<ul class="UserCard-badges badges">
+					<?php if($_user['gid'] == 1) { ?>
+					<li class="item-group1">
+						<span class="Badge Badge--group--1" title="<?php echo lang('group_1');?>">
+							<i class="icon fa fa-fw fa-wrench Badge-icon"></i>
+						</span>
+					</li>
+					<?php } ?>
+					<?php if($_user['gid'] == 2) { ?>
+					<li class="item-group2">
+						<span class="Badge Badge--group--2" title="<?php echo lang('group_2');?>">
+							<i class="icon fa fa-fw fa-secret Badge-icon"></i>
+						</span>
+					</li>
+					<?php } ?>
+					<?php if($_user['gid'] >= 4 && $_user['gid'] <= 5) { ?>
+					<li class="item-group4">
+						<span class="Badge Badge--group--4" title="版主">
+							<i class="icon fa fa-fw fa-user-md Badge-icon"></i>
+						</span>
+					</li>
+					<?php } ?>
+					<?php if($_user['gid'] >= 101 && $_user['gid'] <= 105) { ?>
+					<li class="item-group100">
+						<span class="Badge Badge--group--100" title="注册会员">
+							<i class="icon fa fa-fw fa-user Badge-icon"></i>
+						</span>
+					</li>
+					<?php } ?>
+				</ul>
+				<ul class="UserCard-info">
+					<li class="item-bio">
+						<div class="UserBio editable">
+							<div class="UserBio-content">
+								<p class="UserBio-placeholder">写点什么介绍下自己吧</p>
+							</div>
+						</div>
+					</li>
+					<li class="item-lastSeen">
+						<span class="UserCard-lastSeen" title="<?php echo lang('last_login_date');?>">
+							<i class="icon fa fa-fw fa-clock-o"></i>
+							<?php echo $_user['login_date_fmt'];?>
+						</span>
+					</li>
+					<li class="item-joined" title="<?php echo lang('create_date');?>">
+						<?php echo $_user['create_date_fmt'];?>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<!--边栏开始-->
+		<div class="sideNav UserPage-nav">
+			<ul>
+				<li class="item-nav">
+					<div class="ButtonGroup Dropdown dropdown App-titleControl Dropdown--select">
+						<button class="Dropdown-toggle Button" data-toggle="dropdown">
+							<span class="Button-label">
+								<?php echo lang('user_joined_thread');?>
+							</span>
+							<i class="icon fa fa-fw fa-sort Button-caret"></i>
+						</button>
+						<ul class="Dropdown-menu dropdown-menu">
+							<li class="<?php echo $active == 'default' ? 'active' : '';?>">
+								<a href="<?php echo url("user-$_uid");?>" class="hasIcon">
+									<i class="icon fa fa-fw fa-bars Button-icon"></i>
+									<span class="Button-label">
+										<?php echo lang('user_joined_thread');?>
+										<span class="Button-badge">
+											<?php echo $_user['threads'];?>
+										</span>
+									</span>
+								</a>
+							</li>
+							<li class="<?php echo $active == 'digest' ? 'active' : '';?>">
+								<a href="<?php echo url("user-$_uid-0-1");?>" class="hasIcon">
+									<i class="icon fa fa-fw fa-diamond Button-icon"></i>
+									<span class="Button-label">
+										<?php echo lang('digest_thread');?>
+									</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<!--内容栏开始-->
+		<div class="sideNavOffset UserPage-content">
+			<div class="DiscussionsUserPage">
+				<div class="IndexPage-toolbar">
+					<div class="IndexPage-toolbar-view Dropdown dropdown">
+						<?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
+						<?php if(!empty($group['allowdeleteuser'])) { ?>
+							<a role="button" class="Button Button--danger confirm" data-confirm-text="<?php echo lang('confirm_delete_user');?>" data-method="post" href="<?php echo url("mod-deleteuser-$_user[uid]");?>">
+								<?php echo lang('delete_user');?>
+							</a>
+						<?php } ?>
+					</div>
+					<ul class="IndexPage-toolbar-action">
+						<li class="item-refresh">
+							<button class="win-refresh Button Button--icon hasIcon" type="button">
+								<i class="icon fa fa-fw fa-refresh Button-icon"></i>
+							</button>
+						</li>
+					</ul>
+				</div>
+				<div class="DiscussionList">
+					<ul class="DiscussionList-discussions">
+						<?php include _include(APP_PATH.'view/htm/thread_list.inc.htm');?>
+					</ul>
+				</div>
+				<div class="DiscussionList-loadMore">
+					<nav class="text-center">
+						<ul class="pagination"><?php echo $pagination; ?></ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--{hook user_profile_end.htm}-->
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+<!--{hook user_profile_js.htm}-->

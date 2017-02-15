@@ -1,0 +1,15 @@
+<?php if($gid > 0 && $gid < 5) { ?>
+<div class="ButtonGroup mod-button" role="group">
+	<button type="button" class="Button delete" title="<?php echo lang('delete');?>"><i class="icon fa fa-fw fa-trash f16 Button-icon"></i></button>
+	<button type="button" class="Button move" title="<?php echo lang('move');?>"><i class="icon fa fa-fw fa-arrows f16 Button-icon"></i></button>
+	<button type="button" class="Button top" title="<?php echo lang('top');?>"><i class="icon fa fa-fw fa-thumb-tack f16 Button-icon"></i></button>
+	<button type="button" class="Button _close" title="<?php echo lang('close');?>"><i class="fa fa-fw fa-lock f16 Button-icon"></i></button>
+	<button type="button" class="Button digest" title="<?php echo lang('digest');?>"><i class="fa fa-fw fa-diamond f16 Button-icon"></i></button>
+	<button class="Button" title="<?php echo lang('checkall');?>">
+		<label class="hand">
+			<input type="checkbox" data-target='input[name="modtid"]' class="checkall hide" value="" aria-label="<?php echo lang('checkall');?>">
+			<i class="fa fa-fw fa-check-square f16 Button-icon"></i>
+		</label>
+	</button>
+</div>
+<?php } ?>

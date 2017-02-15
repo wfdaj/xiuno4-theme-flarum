@@ -1,0 +1,127 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+<div class="IndexPage">
+	<header class="Hero TagHero text-white hero-<?php echo $forum['fid'];?>">
+		<div class="container">
+			<div class="containerNarrow">
+				<h2 class="Hero-title">
+					<?php echo $forum['name']; ?>
+				</h2>
+				<div class="Hero-subtitle">
+					<?php echo $forum['brief']; ?>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="IndexPage-nav sideNav">
+			<ul class="affix affix-top">
+				<li class="item-newDiscussion App-primaryControl">
+					<a role="button" class="Button Button--primary IndexPage-newDiscussion hasIcon" href="<?php echo url('thread-create-'.$fid);?>" title="<?php echo lang('thread_create_new');?>">
+						<i class="icon fa fa-fw fa-edit Button-icon">
+						</i>
+						<span class="Button-label">
+							<?php echo lang('thread_create_new');?>
+						</span>
+					</a>
+				</li>
+				<li class="item-nav">
+					<div class="ButtonGroup Dropdown dropdown App-titleControl Dropdown--select">
+						<button class="Dropdown-toggle Button" data-toggle="dropdown">
+							<span class="Button-label">
+								<?php echo lang('index_page');?>
+							</span>
+							<i class="icon fa fa-fw fa-sort Button-caret">
+							</i>
+						</button>
+						<ul class="Dropdown-menu dropdown-menu" id="forumlist">
+							<li class="item-allDiscussions">
+								<a href="." class=" hasIcon" title="<?php echo lang('index_page');?>">
+									<i class="icon fa fa-fw fa-comments-o Button-icon">
+									</i>
+									<span class="Button-label">
+										<?php echo lang('index_page');?>
+									</span>
+								</a>
+							</li>
+							<li class="item-tags">
+								<a href="###" class="hasIcon" title="Tags">
+									<i class="icon fa fa-fw fa-th-large Button-icon">
+									</i>
+									<span class="Button-label">
+										Tags
+									</span>
+								</a>
+							</li>
+							<li class="Dropdown-separator"></li>
+							<!-- 版块 -->
+							<?php foreach($forumlist_show as $_forum) { ?>
+							<!--{hook header_nav_forumlist_loop_start.htm}-->
+							<li fid="<?php echo $_forum['fid'];?>">
+								<a class="TagLinkButton hasIcon nav-<?php echo $_forum['fid']; ?>" href="<?php echo url("forum-$_forum[fid]");?>">
+									<span class="icon TagIcon Button-icon">
+									</span>
+									<?php echo $_forum['name'];?>
+								</a>
+							</li>
+							<!--{hook header_nav_forumlist_loop_end.htm}-->
+							<?php } ?>
+							<li class="Dropdown-separator"></li>
+							<!--{hook header_nav_pc_end.htm}-->
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="IndexPage-results">
+			<div class="sideNavOffset">
+				<div class="IndexPage-toolbar">
+					<!--{hook forum_breadcrumb_after.htm}-->
+					<div class="IndexPage-toolbar-view Dropdown dropdown">
+						<button class="Dropdown-toggle Button" data-toggle="dropdown">
+							<?php echo lang('new_thread');?>
+							<i class="icon fa fa-fw fa-sort">
+							</i>
+						</button>
+						<ul class="Dropdown-menu dropdown-menu">
+							<li>
+								<a href="<?php echo url("forum-$fid");?>">
+									<?php echo lang('new_thread');?>
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo url("forum-$fid-1-0-1");?>">
+									<?php echo lang('digest_thread');?>
+								</a>
+							</li>
+						</ul>
+						<?php include _include(APP_PATH.'view/htm/thread_list_mod.inc.htm');?>
+					</div>
+					<ul class="IndexPage-toolbar-action">
+						<li class="item-refresh">
+							<button class="win-refresh Button Button--icon hasIcon" type="button">
+								<i class="icon fa fa-fw fa-refresh Button-icon"></i>
+							</button>
+						</li>
+					</ul>
+				</div>
+				<div class="DiscussionList">
+					<ul class="DiscussionList-discussions">
+						<!--{hook forum_threadlist_before.htm}-->
+						<?php include _include(APP_PATH.'view/htm/thread_list.inc.htm');?>
+						<!--{hook forum_threadlist_after.htm}-->
+					</ul>
+					<div class="DiscussionList-loadMore">
+						<!--{hook forum_page_before.htm}-->
+						<nav class="text-center">
+							<ul class="pagination"><?php echo $pagination; ?></ul>
+						</nav>
+						<!--{hook forum_page_after.htm}-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--{hook forum_end.htm}-->
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+<!--{hook forum_js.htm}-->

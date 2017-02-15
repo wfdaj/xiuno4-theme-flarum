@@ -1,0 +1,114 @@
+<?php include _include(APP_PATH.'view/htm/header_thread.inc.htm');?>
+
+<div class="UserPage">
+    <?php include _include(APP_PATH.'view/htm/my_card.inc.htm');?>
+    <div class="container">
+        <!--边栏开始-->
+        <div class="sideNav UserPage-nav">
+            <ul>
+                <li class="item-nav">
+                    <div class="ButtonGroup Dropdown dropdown App-titleControl Dropdown--select">
+                        <button class="Dropdown-toggle Button" data-toggle="dropdown">
+                            <span class="Button-label"><?php echo lang('modify_avatar'); ?></span>
+                            <i class="icon fa fa-fw fa-sort Button-caret"></i>
+                        </button>
+                        <ul class="Dropdown-menu dropdown-menu">
+                            <!--{hook my_index_profile_before.htm}-->
+                            <li>
+                                <a href="<?php echo url('my'); ?>" class="hasIcon ">
+                                    <i class="icon fa fa-fw fa-user Button-icon"></i>
+                                    <span class="Button-label">
+                                        个人资料
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_profile_after.htm}-->
+                            <li>
+                                <a href="<?php echo url('my-thread'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-bars Button-icon"></i>
+                                    <span class="Button-label">
+                                        帖子
+                                        <span class="Button-badge"><?php echo $user['threads'];?></span>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_thread_after.htm}-->
+                            <li>
+                                <a href="<?php echo url('my-password'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-key Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('modify_password'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_password_after.htm}-->
+                            <li class="active">
+                                <a href="<?php echo url('my-avatar'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-smile-o Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('modify_avatar'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_avatar_after.htm}-->
+                            <li class="Dropdown-separator"></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--内容栏开始-->
+        <div class="sideNavOffset UserPage-content">
+            <div class="SettingsPage">
+                <ul class="Modal--small">
+                    <li class="item-notifications">
+                        <fieldset class="Settings-notifications">
+                            <legend>
+                                <?php echo lang('modify_avatar');?>
+                            </legend>
+                            <p class="center">
+                            	<img id="avatar_img" src="<?php echo $user['avatar_url'];?>">
+                            </p>
+                            <p class="center">
+                            	<input type="file" id="avatar_upload" accept=".jpg,.jpeg,.png,.gif,.bmp"  class="upload" style="width: 200px; opacity: 0.7" value="<?php echo lang('modify_avatar');?>">
+                            </p>
+                            <p class="center">
+                            	<progress class="progress progress-success" value="0" max="100" id="avatar_progress">0%</progress>
+                            </p>
+                        </fieldset>
+                    </li>
+                    <!--{hook my_profile_row_after.htm}-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script>
+var javatar_upload = $('#avatar_upload');
+var jprogress = $('#avatar_progress');
+var jimg = $('#avatar_img');
+javatar_upload.on('change', function(e) {
+	var files = xn.get_files_from_event(e);
+	jprogress.val(0);
+	xn.upload_file(
+		files[0], 
+		xn.url('my-avatar'), 
+		{width: 128, height: 128, action: 'clip', filetype: 'png'}, 
+		function(code, message) {
+			if(code == 0) {
+				jimg.attr('src', message.url+'?'+Math.random());
+			} else {
+				$.alert(message);
+			}
+		}, 
+		function(percent) {
+			jprogress.val(percent);
+		}
+	);
+});
+
+</script>

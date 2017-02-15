@@ -1,0 +1,81 @@
+<?php $db = G('db');?>
+<?php $starttime = G('starttime');?>
+<?php $forumlist = G('forumlist');?>
+<?php $forumarr = G('forumarr');?>
+<?php $fid = G('fid');?>
+<?php $conf = G('conf');?>
+<?php $static_version = $conf['static_version'];?>
+
+<!--{hook footer_start.htm}-->
+
+<?php  echo xn_debug_info(); ?>
+
+</div><!-- App-content -->
+
+<!--{hook footer_footer_before.htm}-->
+<!--{hook footer_footer_after.htm}-->
+
+</div><!-- App -->
+
+<?php if($user && $GG_reply){ ?>
+	<div class="modal fade" id="GG_reply_reminder_box" tabindex="-1" role="dialog" aria-labelledby="GG_reply_reminder_box" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="GG_reply_reminder_box">新回复</h4>
+				</div>
+				<div class="modal-body">
+					<ul>
+						<?php foreach($GG_reply as $_GG_reply){ ?>
+						<?php $GG_reply_user = user_read($_GG_reply['uid']);?>
+						<li style="padding:0 3%;">
+							<a href="<?php echo url('thread-'.$_GG_reply['tid']).'#'.$_GG_reply['pid'];?>" target="_blank"><?php echo $GG_reply_user['username'];?>刚刚回复了您。</a>
+						</li>
+						<?php } ?>
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php } ?>
+
+
+<!--[if lt IE 9]>
+<script>window.location = 'view/htm/browser.html';</script>
+<![endif]-->
+
+<!--{hook footer_js_before.htm}-->
+<script src="lang/<?php echo $conf['lang'];?>/bbs.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/jquery-3.1.0.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/tether.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/bootstrap.js<?php echo $static_version;?>"></script>
+<script src="plugin/xy_style_flarum/js/bootstrap-plugin.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/async.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/xiuno.js<?php echo $static_version;?>"></script>
+<script src="<?php echo $conf['view_url'];?>js/form.js<?php echo $static_version;?>"></script>
+<script src="plugin/xy_style_flarum/js/baymax.js<?php echo $static_version;?>"></script>
+<script>
+var debug = DEBUG = <?php echo DEBUG; ?>;
+var url_rewrite_on = <?php echo $conf['url_rewrite_on'];?>;
+var forumarr = <?php echo xn_json_encode($forumarr);?>;
+var fid = <?php echo $fid;?>;
+</script>
+<script>
+$(function() {
+	// 图片懒加载 by jquery.lazyload.min.js
+    $("img.lazy").lazyload({effect: "fadeIn"});
+});
+</script>
+<script src="<?php echo $conf['view_url'];?>js/bbs.js<?php echo $static_version;?>"></script>
+<script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js<?php echo $static_version;?>"></script>
+
+<!--{hook footer_js_after.htm}-->
+
+</body>
+</html>
+<!--{hook footer_end.htm}-->
+<?php echo cron_run();?>

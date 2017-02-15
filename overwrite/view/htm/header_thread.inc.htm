@@ -1,0 +1,183 @@
+<?php $conf = G('conf');?>
+<?php $header = G('header');?>
+<?php $user = G('user');?>
+<?php $uid = G('uid');?>
+<?php $gid = G('gid');?>
+<?php $fid = G('fid');?>
+<?php $tid = G('tid');?>
+<?php $pid = G('pid');?>
+<?php $route = G('route');?>
+<?php $forumlist_show = G('forumlist_show');?>
+<?php $static_version = $conf['static_version'];?>
+<!DOCTYPE html>
+<html lang="<?php echo $conf['lang'];?>">
+<head>
+    <?php echo defined('BASE_HREF') ? '<base href="'.BASE_HREF.'">' : '' ;?>
+    <!--{hook header_mete_before.htm}-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="author" content="XiunoBBS 4.0">
+    <meta name="keywords" content="<?php echo $header['keywords'];?>">
+    <meta name="description" content="<?php echo $header['description'];?>">
+    <meta name="renderer" content="webkit">
+    <title><?php echo $header['title'];?></title>
+    <link rel="shortcut icon" href="<?php echo $conf['view_url'];?>img/favicon.ico">
+    <link rel="icon" sizes="32x32" href="<?php echo $conf['view_url'];?>img/favicon.ico">
+    <link rel="Bookmark" href="<?php echo $conf['view_url'];?>img/favicon.ico">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="plugin/xy_flarum/css/forum.css<?php echo $static_version;?>">
+    <link rel="stylesheet" href="plugin/xy_flarum/css/xiuno.css<?php echo $static_version;?>">
+    <!--{hook header_css_after.htm}-->
+</head>
+
+<body>
+    <!--{hook header_body_start.htm}-->
+    <div class="App affix hasPane">
+        <!--手机模式下拉菜单-->
+        <div class="App-navigation">
+            <div class="Navigation ButtonGroup App-backControl">
+                <button class="Button Button--icon Navigation-drawer hasIcon win-back" type="button">
+                    <i class="icon fa fa-fw fa-chevron-left Button-icon">
+                    </i>
+                </button>
+            </div>
+        </div>
+        <div class="App-drawer">
+            <header class="App-header">
+                <div class="container">
+                    <div id="header-navigation" class="Header-navigation">
+                        <div class="Navigation ButtonGroup ">
+                            <a class="Button Navigation-back hasIcon win-back" href="javascript:void(0);" type="button">
+                                <i class="icon fa fa-fw fa-chevron-left Button-icon"></i>
+                                <span class="Button-label">
+                                    <i class="icon fa fa-fw fa-bars"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--{hook header_nav_pc_start.htm}-->
+                    <h1 class="Header-title">
+                        <a href="." id="home-link">
+                            <img src="<?php echo $conf['view_url'];?>img/logo.png" alt="logo" height="24">
+                        </a>
+                    </h1>
+                    <!--{hook header_nav_logo_after.htm}-->
+                    <div class="Header-primary">
+                        <ul class="Header-controls">
+                            <!--{hook header_nav_home_link_after.htm}-->
+                            <li>
+                                <a href="http://jpdm.net/news/" class="Button Button--link">
+                                    快讯
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://jpdm.net/coolsite/" class="Button Button--link">
+                                    酷站
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://jpdm.net/code/" class="Button Button--link">
+                                    源码
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://jpdm.net/bbs/" class="Button Button--link">
+                                    论坛
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="Header-secondary">
+                        <ul class="Header-controls">
+                            <li class="item-search">
+                                <div class="Search">
+                                    <div class="Search-input">
+                                        <form action="<?php echo url('search');?>" id="search_form">
+                                            <input class="FormControl" placeholder="<?php echo lang('keyword');?>" name="keyword">
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                            <!--{hook header_nav_pc_user_start.htm}-->
+                            <!-- 游客 -->
+                            <?php if(empty($uid)) { ?>
+                            <li class="item-signUp">
+                                <a class="Button Button--link" href="<?php echo url('user-login');?>" title="<?php echo lang('login');?>">
+                                    <span class="Button-label">
+                                        <?php echo lang('login');?>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="item-logIn">
+                                <a class="Button Button--link" href="<?php echo url('user-create');?>" title="Log In">
+                                    <span class="Button-label">
+                                        <?php echo lang('register');?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!-- 登陆用户 -->
+                            <?php } else { ?>
+                            <li class="item-session">
+                                <div class="ButtonGroup Dropdown dropdown SessionDropdown">
+                                    <button class="Dropdown-toggle Button Button--user Button--flat" data-toggle="dropdown">
+                                        <img class="Avatar" src="<?php echo $user['avatar_url'];?>">
+                                        <span class="Button-label">
+                                            <span class="username">
+                                                <?php echo $user['username'];?>
+                                            </span>
+                                        </span>
+                                    </button>
+                                    <ul class="Dropdown-menu dropdown-menu Dropdown-menu--right">
+                                        <li class="item-profile">
+                                            <a href="<?php echo url('my');?>" class="hasIcon" type="button" title="<?php echo lang('my_home');?>">
+                                                <i class="icon fa fa-fw fa-user Button-icon">
+                                                </i>
+                                                <span class="Button-label">
+                                                    <?php echo lang('my_home');?>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="item-settings">
+                                            <a href="<?php echo url('my-thread'); ?>" class="hasIcon" type="button" title="<?php echo lang('my_post'); ?>">
+                                                <i class="icon fa fa-fw fa-comment Button-icon">
+                                                </i>
+                                                <span class="Button-label">
+                                                    <?php echo lang('my_post'); ?>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="Dropdown-separator">
+                                        </li>
+                                        <?php if($gid == 1) { ?>
+                                        <!-- 管理员 -->
+                                        <li class="item-settings">
+                                            <a href="admin/" class="hasIcon" target="_blank" type="button" title="<?php echo lang('admin_page');?>">
+                                                <i class="icon fa fa-fw fa-wrench Button-icon">
+                                                </i>
+                                                <span class="Button-label">
+                                                    <?php echo lang('admin_page');?>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <?php } ?>
+                                        <li class="item-logOut">
+                                            <a class="hasIcon" href="<?php echo url('user-logout');?>" type="button" title="<?php echo lang('logout');?>">
+                                                <i class="icon fa fa-fw fa-sign-out Button-icon">
+                                                </i>
+                                                <span class="Button-label">
+                                                    <?php echo lang('logout');?>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <?php } ?>
+                            <!--{hook header_nav_pc_user_end.htm}-->
+                        </ul>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="App-content">
+        <!--{hook body_start.htm}-->

@@ -1,0 +1,152 @@
+<?php include _include(APP_PATH.'view/htm/header.inc.htm');?>
+
+<!--{hook my_profile_start.htm}-->
+<div class="UserPage">
+    <div class="UserCard Hero UserHero">
+        <div class="darkenBackground">
+            <div class="container">
+                <div class="UserCard-profile">
+                    <h2 class="UserCard-identity">
+                        <div class="AvatarEditor Dropdown UserCard-avatar">
+                            <img class="Avatar" src="<?php echo $user['avatar_url'];?>">
+                        </div>
+                        <span class="username"><?php echo $user['username'];?></span>
+                    </h2>
+                    <!--{hook my_index_groupname_before.htm}-->
+                    <ul class="UserCard-info">
+                        <li class="item-bio">
+                            <div class="UserBio editable">
+                                <div class="UserBio-content">
+                                    <p class="UserBio-placeholder">写点什么介绍下自己吧</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="item-lastSeen">
+                            <span class="UserCard-lastSeen" title="<?php echo lang('last_login_date');?>"><i class="icon fa fa-fw fa-clock-o "></i> <?php echo $user['login_date_fmt'];?></span>
+                        </li>
+                        <li class="item-joined" title="<?php echo lang('create_date');?>"> <?php echo $user['create_date_fmt'];?></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!--边栏开始-->
+        <div class="sideNav UserPage-nav">
+            <ul class="affix">
+                <li class="item-nav">
+                    <div class="ButtonGroup Dropdown dropdown App-titleControl Dropdown--select">
+                        <button class="Dropdown-toggle Button" data-toggle="dropdown">
+                            <span class="Button-label"><?php echo lang('my_profile'); ?></span>
+                            <i class="icon fa fa-fw fa-sort Button-caret"></i>
+                        </button>
+                        <ul class="Dropdown-menu dropdown-menu">
+                            <li>
+                                <a href="<?php echo url('my'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-tachometer Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('my_profile'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_profile_before.htm}-->
+                            <li class="active">
+                                <a href="<?php echo url('my-profile'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-user Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('my_profile'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_profile_after.htm}-->
+                            <li>
+                                <a href="<?php echo url('my-password'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-key Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('modify_password'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_password_after.htm}-->
+                            <li>
+                                <a href="<?php echo url('my-avatar'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-smile-o Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('modify_avatar'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_avatar_after.htm}-->
+                            <li>
+                                <a href="<?php echo url('my-thread'); ?>" class="hasIcon">
+                                    <i class="icon fa fa-fw fa-comment Button-icon"></i>
+                                    <span class="Button-label">
+                                        <?php echo lang('my_post'); ?>
+                                    </span>
+                                </a>
+                            </li>
+                            <!--{hook my_index_thread_after.htm}-->
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!--内容栏开始-->
+        <div class="sideNavOffset UserPage-content">
+            <div class="SettingsPage">
+                <ul>
+                    <li class="item-notifications">
+                        <fieldset class="Settings-notifications">
+                            <legend>
+                                <?php echo lang('my_profile');;?>
+                            </legend>
+                            <ul>
+                                <li class="item-notificationGrid">
+                                    <table class="NotificationGrid">
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo lang('username');;?></td>
+                                                <td><?php echo $user['username'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?php echo lang('email');;?></td>
+                                                <td><?php echo $user['email'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?php echo lang('user_group');;?></td>
+                                                <td><?php echo $user['groupname'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?php echo lang('create_date');;?></td>
+                                                <td><?php echo $user['create_date_fmt'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?php echo lang('last_login_date');;?></td>
+                                                <td><?php echo $user['login_date_fmt'];?></td>
+                                            </tr>
+                                            <!--{hook my_profile_login_date_after.htm}-->
+                                            <tr>
+                                                <td><?php echo lang('threads');;?></td>
+                                                <td><?php echo $user['threads'];?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?php echo lang('posts');;?></td>
+                                                <td><?php echo $user['posts'];?></td>
+                                            </tr>
+                                            <!--{hook my_profile_posts_after.htm}-->
+                                        </tbody>
+                                    </table>
+                                </li>
+                            </ul>
+                        </fieldset>
+                    </li>
+                    <!--{hook my_profile_row_after.htm}-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--{hook my_profile_end.htm}-->
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>

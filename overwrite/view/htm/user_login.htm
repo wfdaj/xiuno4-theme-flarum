@@ -1,0 +1,111 @@
+<?php include _include(APP_PATH.'view/htm/header_thread.inc.htm');?>
+<!--{hook user_login_start.htm}-->
+<div id="modal">
+    <div class="ModalManager modal fade in" style="display: block; position: static;">
+        <div class="Modal Modal--small">
+            <div class="Modal-content">
+                <div class="Modal-close App-backControl">
+                    <!-- 返回对话框按钮 -->
+                    <a class="Button Button--icon Button--link hasIcon win-back">
+                        <i class="icon fa fa-fw fa-times Button-icon">
+                        </i>
+                    </a>
+                </div>
+                <!--{hook user_login_card_before.htm}-->
+                <form action="<?php echo url('user-login');?>" method="post" id="form">
+                    <div class="Modal-header">
+                        <h3 class="App-titleControl App-titleControl--text">
+                            <?php echo lang('user_login');?>
+                        </h3>
+                        <!--{hook user_login_title_after.htm}-->
+                    </div>
+                    <div class="Modal-body">
+                        <div class="LogInButtons">
+                            <a href="qq_login.htm" target="_blank" title="使用 QQ 账号登录" class="Button LogInButton--github LogInButton hasIcon">
+                                <i class="icon fa fa-fw fa-qq Button-icon">
+                                </i>
+                                <span class="Button-label">
+                                    使用 QQ 账号登陆
+                                </span>
+                            </a>
+                        </div>
+                        <div class="Form Form--centered">
+                            <div class="Form-group">
+                                <input class="FormControl" type="text" placeholder="<?php echo lang('email');?>" id="email" name="email">
+                            </div>
+                            <!--{hook user_login_email_after.htm}-->
+                            <div class="Form-group">
+                                <input class="FormControl" type="password" placeholder="<?php echo lang('password');?>" id="password" name="password">
+                            </div>
+                            <!--{hook user_login_password_after.htm}-->
+                            <div class="Form-group">
+                                <button class="Button Button--primary Button--block" type="submit" id="submit" data-loading-text="<?php echo lang('submiting');?>...">
+                                    <span class="Button-label">
+                                        <?php echo lang('login');?>
+                                    </span>
+                                </button>
+                            </div>
+                            <!--{hook user_login_submit_after.htm}-->
+                        </div>
+                    </div>
+                    <div class="Modal-footer">
+                        <!--{hook user_login_form_footer_right_start.htm}-->
+                        <p class="LogInModal-forgotPassword">
+                            <a href="<?php echo url('user-resetpw');?>">
+                                <?php echo lang('forgot_pw');?>
+                            </a>
+                        </p>
+                        <p class="LogInModal-signUp">
+                            还没有帐户？
+                            <a href="<?php echo url('user-create');?>">
+                                <?php echo lang('user_create');?>
+                            </a>
+                        </p>
+                        <!--{hook user_login_form_footer_right_end.htm}-->
+                    </div>
+                </form>
+                <!--{hook user_login_card_after.htm}-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--{hook user_login_end.htm}-->
+
+<?php include _include(APP_PATH.'view/htm/footer.inc.htm');?>
+
+<script src="<?php echo $conf['view_url'];?>js/md5.js"></script>
+
+<script>
+var jform = $('#form');
+var jsubmit = $('#submit');
+var jemail = $('#email');
+var jpassword = $('#password');
+var referer = '<?php echo http_referer();?>';
+jform.on('submit', function() {
+    jform.reset();
+    jsubmit.button('loading');
+    var postdata = jform.serializeObject();
+    postdata.password = $.md5(postdata.password);
+    $.xpost(jform.attr('action'), postdata, function(code, message) {
+        if(code == 0) {
+            $.alert(message);
+            jsubmit.button(message).delay(3000).location(referer);
+            //jsubmit.button(message).delay(3000).location('./');
+        } else if(code == 'email') {
+            jemail.alert(message).focus();
+            jsubmit.button('reset');
+        } else if(code == 'password') {
+            jpassword.alert(message).focus();
+            jsubmit.button('reset');
+        } else {
+            alert(message);
+            jsubmit.button('reset');
+        }
+    });
+    return false;
+});
+
+</script>
+
+<!--{hook user_login_js.htm}-->

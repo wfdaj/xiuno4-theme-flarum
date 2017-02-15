@@ -7,5 +7,5 @@
 有任何问题，可以提交 Issues ，或者加 小众程序 QQ 群交流：[182885562](//shang.qq.com/wpa/qunwpa?idkey=4d70b9bd2557173f327530492a814ea8378c87306d8dbf45be5b2c921ccc633f)
 
 ## 演示截图
-<img src="http://jpdm.net/bbs/upload/attach/201701/1_asslybml7sbulfb.png" width="600" alt="仿flarum模板首页">
-<img src="http://jpdm.net/bbs/upload/attach/201701/1_cejb8vhj19zetq7.png" width="600" alt="仿flarum模板内容页">
+<img src="https://raw.githubusercontent.com/wfdaj/xiuno4-theme-flarum/master/img/xiuno4-theme-index.png" width="600" alt="仿flarum模板首页">
+<img src="https://raw.githubusercontent.com/wfdaj/xiuno4-theme-flarum/master/img/xiuno4-theme-thread.png" width="600" alt="仿flarum模板内容页">

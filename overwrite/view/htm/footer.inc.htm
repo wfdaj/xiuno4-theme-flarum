@@ -17,33 +17,6 @@
 
 </div><!-- App -->
 
-<?php if($user && $GG_reply){ ?>
-	<div class="modal fade" id="GG_reply_reminder_box" tabindex="-1" role="dialog" aria-labelledby="GG_reply_reminder_box" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="GG_reply_reminder_box">新回复</h4>
-				</div>
-				<div class="modal-body">
-					<ul>
-						<?php foreach($GG_reply as $_GG_reply){ ?>
-						<?php $GG_reply_user = user_read($_GG_reply['uid']);?>
-						<li style="padding:0 3%;">
-							<a href="<?php echo url('thread-'.$_GG_reply['tid']).'#'.$_GG_reply['pid'];?>" target="_blank"><?php echo $GG_reply_user['username'];?>刚刚回复了您。</a>
-						</li>
-						<?php } ?>
-					</ul>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-success" data-dismiss="modal">关闭</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<?php } ?>
-
-
 <!--[if lt IE 9]>
 <script>window.location = 'view/htm/browser.html';</script>
 <![endif]-->

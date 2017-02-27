@@ -266,6 +266,61 @@ a.text-muted:focus, a.text-muted:hover { color: #687077 !important; }
   padding: 8px 8px 8px 0;
 }
 
+/*分页*/
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 21px 0;
+  border-radius: 3px;
+}
+.pagination>li {
+  display: inline
+}
+
+.pagination>li>a, .pagination>li>span {
+  position: relative;
+  float: left;
+  padding: 4px 12px;
+  text-decoration: none;
+  color: #64ACA0;
+  font-weight: 700;
+  background-color: #fff;
+  border: 1px solid #E0E0E0;
+  margin-left: -1px
+}
+
+.pagination>li:first-child>a, .pagination>li:first-child>span {
+  margin-left: 0;
+  border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px
+}
+
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px
+}
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+  color: #333;
+  background-color: #eee;
+  border-color: #ddd
+}
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+  z-index: 2;
+  color: #fff;
+  background-color: #75b5aa;
+  border-color: #75b5aa;
+  cursor: default
+}
+
+.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
+  color: #777;
+  background-color: #fff;
+  border-color: #ddd;
+  cursor: not-allowed
+}
+
 /*Off Canvas 导航*/
 @media (max-width: 767px){
 .pushy{position: fixed; width: 200px; height: 100%; top: 0; z-index: 9999; background: #fff; border-right: 1px solid #ddd; overflow: auto; -webkit-overflow-scrolling: touch;}

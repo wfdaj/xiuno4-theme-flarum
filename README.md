@@ -2,7 +2,7 @@
 适用于 xiuno4 的 flarum 样式模板
 - - -
 ## 安装方法
-下载得到 xiuno4-theme-flarum-master.zip 压缩包，全部解压后放到 xy_flarum 文件夹内，然后上传到 xiuno 程序 plugin/目录下，后台安装即可。
+下载得到 xiuno4-theme-flarum-master.zip 压缩包，把 xy_flarum 文件夹上传到 xiuno 程序 plugin/目录下，后台安装即可。
 ## 演示地址
 [http://jpdm.net/bbs/](http://jpdm.net/bbs/)
 
